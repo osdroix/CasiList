@@ -1,0 +1,14 @@
+<div class="overlay">
+    <div id="popup" class="popup">
+        <button onclick="closePopup()" class="buttons" style="float: right; border: none; background: none; font-size: 20px; cursor: pointer;">&times;</button>
+        <h3>Cambiar nombre de tú casillero</h3>
+        <form action="/rename-collection" method="POST">
+            <input type="hidden" id="oldName" name="oldName" value="">
+            <input class="form-control" type="text" name="newName" required placeholder="Nuevo nombre">
+            <hr>
+            <center>
+                <button class="button" type="submit">Cambiar Nombre</button>
+            </center>
+        </form>
+    </div>
+</div>

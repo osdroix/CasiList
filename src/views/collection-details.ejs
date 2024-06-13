@@ -1,0 +1,31 @@
+<%- include('views-const/header'); -%>
+
+<article style="padding: 20px; max-width: 800px; margin: auto;">
+    <h1 style="text-align: center;"><%= currentCollection %></h1>
+    <p style="text-align: center;">Tú Repositorio</p>
+    <ul style="list-style: none; padding: 0;">
+        <% files.forEach(function(file) { %>
+            <li style="background: #f9f9f9; margin: 10px 0; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <span style="font-size: 16px; font-weight: bold;"><%= file.filename %></span>
+                <div style="float: right;">
+                    <!-- Enlace para descargar el archivo -->
+                    <a href="/download?collection=<%= currentCollection %>&fileId=<%= file._id %>" style="margin-right: 10px; color: #007bff; text-decoration: none;">
+                        Descargar
+                    </a>
+                    <!-- Botón para eliminar el archivo -->
+                    <form action="/delete" method="POST" style="display: inline;">
+                        <input type="hidden" name="collectionName" value="<%= currentCollection %>">
+                        <input type="hidden" name="fileId" value="<%= file._id %>">
+                        <button class="danger" type="submit" style="border: none; background: none; cursor: pointer;">
+                            <img src="IMG/borrar.png" alt="Eliminar" style="vertical-align: middle;">
+                        </button>
+                    </form>
+                </div>
+                <div style="clear: both;"></div>
+            </li>
+        <% }); %>
+    </ul>
+    <a href="/" style="display: inline-block; margin-top: 20px; color: #007bff; text-decoration: none;">Volver a inicio</a>
+</article>
+
+<%- include('views-const/footer'); -%>

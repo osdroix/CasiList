@@ -1,0 +1,75 @@
+<%- include('views-const/header'); -%>
+
+<article>
+    <section class="party">
+        <div class="casilleros-main">  
+            <div>
+                <h2>Casilleros Disponibles</h2>
+                <div style="text-align: right;">
+                    <form id="searchForm">
+                        <input type="text" id="searchInput" placeholder="Buscar casilleros..." onkeyup="filterCasilleros()">
+                        <button type="button" class="button">Buscar</button>
+                    </form> 
+                </div>
+            </div>             
+            <div class="casilleros-paint">
+                <% collectionDetails.forEach(function(detail) { %>
+                    <div class="casilleros">
+                        <h3><%= detail.name %></h3> 
+                        <label>Archivos: <%= detail.fileCount %></label> 
+                        <div class="party">
+                            <a class="btn btn-light" href="/files?collection=<%= detail.name %>">Ver</a>
+                            <button class="btn btn-primary" onclick="openPopup('<%= detail.name %>')">Editar</button>
+                            <form action="/delete-collection" method="POST" style="display: inline;">
+                                <input type="hidden" name="collectionName" value="<%= detail.name %>">
+                                <button class="danger" type="submit">
+                                    <img src="IMG/borrar.png" alt="eliminar">
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>            
+        </div>  
+        <div class="form-data">
+            <div class="uno">
+                <img src="IMG/editar.png" alt="hola" style="width:50%; height: auto;">
+                <form action="/create-collection" method="POST">
+                    <div class="party-d">
+                        <input type="text" class="form-control" name="collectionName" required placeholder="Nombre del casillero">
+                        <button class="button" type="submit">Crear</button>
+                    </div>
+                </form>
+                <h1>Mis Repositorio</h1>
+                <p class="limbo">
+                    Bienvenid@ a su espacio de trabajo. Aquí puede visualizar sus repositorios ya creados o comenzar a crear.
+                    <button class="btn btn-link" type="button" onclick="toggleView()">subir documento</button>
+                </p>
+            </div>
+            <div class="dos">
+                <img src="IMG/editar.png" alt="hola" style="width:30%; height: auto;">
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <h3>Subir Archivo a tú casillero</h3>
+                    <div>
+                        <label>Selecciona tú casillero preferido:</label>
+                        <select class="form-select form-select-lg mb-3" name="collectionName" required>
+                            <% collectionDetails.forEach(function(detail) { %>
+                                <option value="<%= detail.name %>"><%= detail.name %></option>
+                            <% }); %>
+                        </select>
+                        <input class="form-control" type="file" name="file" required>
+                    </div>
+                    <br>
+                    <center>
+                        <button class="button" type="submit">Subir archivo</button>
+                        <!-- Botón para regresar al formulario de creación -->
+                        <button class="btn btn-link" type="button" onclick="toggleView()">Crear casillero</button>
+                    </center>
+                </form>
+            </div>
+        </div>                    
+    </section>
+</article>
+
+<%- include('views-const/popup'); -%>
+<%- include('views-const/footer'); -%>
